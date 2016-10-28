@@ -1,0 +1,18 @@
+# Number Between 0 and 30,000,000 defining the Apparator range
+teleportRadius:
+  - 9000
+# X and Z coordinates separates by a comma (x,y)
+spawnCoordinates: 
+  - 0,0
+# Worlds where Endermen drop Apparator Tickets
+ticketDropWorlds:
+  - world
+# Chance of Endermen dropping Apparator Tickets
+ticketDropChance:
+  - 5
+# Whether or not Apparators teleport randomly
+teleportRandom:
+  - true
+# How often an Apparator will teleport randomly (in minutes)
+teleportFrequency:
+  - 5

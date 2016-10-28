@@ -1,0 +1,29 @@
+name: Tardis
+main: zedly.tardis.TardisPlugin
+version: 1.1.0
+
+commands:
+  tardis:
+    description: Lists active Tardises and allows the user to teleport to them.
+    permission: tardis.tp
+    default: true
+    aliases: [app]
+permissions:
+  tardis.tp:
+    description: Allows usage of /tardis to list and tp to Tardises.
+    default: false
+  tardis.spawn:
+    description: Allows usage of /tardis spawn to spawn a new Tardis.
+    default: false
+  tardis.delete:
+    description: Allows usage of /tardis del to delete a Tardis.
+    default: false 
+  tardis.summon:
+    description: Allows usage of /tardis summon to summon a Tardis.
+    default: false 
+  tardis.*:
+    children:
+      tardis.tp: true
+      tardis.spawn: true
+      tardis.delete: true
+      tardis.summon: true
