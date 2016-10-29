@@ -49,7 +49,7 @@ public class Watcher implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is != null && is.getType() == Material.PAPER
                 && (is.getItemMeta().getDisplayName().equals(ChatColor.LIGHT_PURPLE + "Apparator Ticket")
-                || is.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Tardis Key"))) {
+                || is.getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Tardis Key"))) {
             if (evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 player.sendMessage(ChatColor.DARK_PURPLE + "Click into the air to summon a Tardis!");
                 return true;
@@ -125,7 +125,7 @@ public class Watcher implements Listener {
                 if (Storage.rnd.nextInt(100) + 1 <= Storage.dropChance) {
                     ItemStack is = new ItemStack(Material.PAPER);
                     ItemMeta meta = is.getItemMeta();
-                    meta.setDisplayName(ChatColor.GOLD + "Tardis Key");
+                    meta.setDisplayName(ChatColor.AQUA + "Tardis Key");
                     is.setItemMeta(meta);
                     evt.getEntity().getWorld().dropItem(evt.getEntity().getLocation(), is);
                 }
