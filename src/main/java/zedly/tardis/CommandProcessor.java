@@ -8,6 +8,8 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class CommandProcessor {
 
@@ -71,6 +73,23 @@ public class CommandProcessor {
                     } else {
                         sender.sendMessage(Storage.logo + " A tardis cannot be spawned at that location");
                     }
+                    break;
+                case "key":
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage(Storage.logo + " This can only be done ingame!");
+                        return true;
+                    }
+                    if (!sender.hasPermission("tardis.key")) {
+                        sender.sendMessage(Storage.logo + " You don't have permission to do this.");
+                        return true;
+                    }
+                    ItemStack is = new ItemStack(Material.PAPER, 1);
+                    ItemMeta meta = is.getItemMeta();
+                    meta.setDisplayName(ChatColor.AQUA + "Tardis Key");
+                    is.setItemMeta(meta);
+                    Player p = (Player) sender;
+                    p.getWorld().dropItem(p.getLocation(), is);
+                    p.sendMessage(Storage.logo + "Created a Tardis key");
                     break;
                 case "help":
                     sender.sendMessage(Storage.logo + "\n- /tardis: Lists Tardises.\n- /tardis <ID>: Teleports you to this Tardis."

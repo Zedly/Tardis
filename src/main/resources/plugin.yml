@@ -18,6 +18,9 @@ permissions:
   tardis.delete:
     description: Allows usage of /tardis del to delete a Tardis.
     default: false 
+  tardis.key:
+    description: Allows usage of /tardis key to spawn a Tardis Key item.
+    default: false 
   tardis.summon:
     description: Allows usage of /tardis summon to summon a Tardis.
     default: false 
@@ -26,4 +29,5 @@ permissions:
       tardis.tp: true
       tardis.spawn: true
       tardis.delete: true
+      tardis.key: true
       tardis.summon: true
