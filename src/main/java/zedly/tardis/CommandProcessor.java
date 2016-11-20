@@ -89,7 +89,7 @@ public class CommandProcessor {
                     is.setItemMeta(meta);
                     Player p = (Player) sender;
                     p.getWorld().dropItem(p.getLocation(), is);
-                    p.sendMessage(Storage.logo + "Created a Tardis key");
+                    p.sendMessage(Storage.logo + " Created a Tardis key");
                     break;
                 case "help":
                     sender.sendMessage(Storage.logo + "\n- /tardis: Lists Tardises.\n- /tardis <ID>: Teleports you to this Tardis."

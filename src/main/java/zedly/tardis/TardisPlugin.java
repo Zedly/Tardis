@@ -8,7 +8,6 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import zedly.fireworkeffects.FireworkEffectPlayer;
 
 public class TardisPlugin extends JavaPlugin {
     
@@ -17,7 +16,6 @@ public class TardisPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        Storage.fep = new FireworkEffectPlayer(this);
         this.saveDefaultConfig();
 
         getServer().getPluginManager().registerEvents(new Watcher(), this);

@@ -127,10 +127,10 @@ public class Tardis {
         bl = bl.withColor(Color.fromRGB(0x330000)).withFade(Color.fromRGB(0x33FF00));
         bl = bl.with(FireworkEffect.Type.BALL_LARGE);
         for (int i = 0; i < 4; i++) {
-            Storage.fep.playFirework(signLocation.add(1, 0, 1), bl.build());
-            Storage.fep.playFirework(signLocation.add(1, 0, -1), bl.build());
-            Storage.fep.playFirework(signLocation.add(-1, 0, 1), bl.build());
-            Storage.fep.playFirework(signLocation.add(-1, 0, -1), bl.build());
+            FireworkEffectPlayer.playFirework(signLocation.add(1, 0, 1), bl.build());
+            FireworkEffectPlayer.playFirework(signLocation.add(1, 0, -1), bl.build());
+            FireworkEffectPlayer.playFirework(signLocation.add(-1, 0, 1), bl.build());
+            FireworkEffectPlayer.playFirework(signLocation.add(-1, 0, -1), bl.build());
         }
     }
 

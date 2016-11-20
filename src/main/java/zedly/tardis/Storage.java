@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import zedly.fireworkeffects.FireworkEffectPlayer;
 
 public class Storage {
     public static ArrayList<Tardis> tardises = new ArrayList<>();
-    public static FireworkEffectPlayer fep;
     public static final Random rnd = new Random();
     public static final HashSet<World> ticketDropWorlds = new HashSet<>();
     public static int dropChance;
