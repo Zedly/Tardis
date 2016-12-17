@@ -1,4 +1,4 @@
-name: Tardis
+name: NotTardis
 main: zedly.tardis.TardisPlugin
 version: 1.1.0
 
