@@ -47,7 +47,7 @@ public class Watcher implements Listener {
             }
         }
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.getType() == Material.PAPER
+        if (is != null && is.getType() == Material.PAPER && is.hasItemMeta() && is.getItemMeta().hasDisplayName()
                 && (is.getItemMeta().getDisplayName().equals(ChatColor.LIGHT_PURPLE + "Apparator Ticket")
                 || is.getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Tardis Key"))) {
             if (evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
