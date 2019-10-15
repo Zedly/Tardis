@@ -77,6 +77,10 @@ public class Tardis {
                 }
             }
         }
+        Block maybeLadder = location.getBlock().getRelative(0, -2, 2);
+        if (maybeLadder.getType() == Material.LADDER) {
+            maybeLadder.setType(Material.AIR);
+        }
     }
 
     public void move(final Location destination) {
@@ -220,7 +224,7 @@ public class Tardis {
                                 break;
                             case OAK_WALL_SIGN:
                                 Sign sig = (Sign) location.getBlock().getRelative(x, y, z).getState();
-                                org.bukkit.block.data.Directional sd = (Directional) sig.getBlockData();
+                                Directional sd = (Directional) sig.getBlockData();
                                 sd.setFacing(BlockFace.SOUTH);
                                 sig.setLine(0, ChatColor.DARK_BLUE + "Tardis");
                                 sig.setLine(1, ChatColor.BLACK + "x: " + ChatColor.MAGIC + "12345");
@@ -245,6 +249,15 @@ public class Tardis {
                 }
             }
         }
+
+        Block maybeLadder = location.getBlock().getRelative(0, -2, 2);
+        if (maybeLadder.getType() == Material.AIR) {
+            maybeLadder.setType(Material.LADDER);
+            Directional ld = (Directional) maybeLadder.getBlockData();
+            ld.setFacing(BlockFace.SOUTH);
+            maybeLadder.setBlockData(ld);
+        }
+
     }
 
     private static boolean isSectionSafe(World world, int testX, int testY, int testZ) {
