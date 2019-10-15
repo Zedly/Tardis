@@ -10,7 +10,7 @@ public class RoamingTardis implements Runnable {
     @Override
     public void run() {
         if (!Storage.tardises.isEmpty()) {
-            nextTardisId = (nextTardisId + 1) % Storage.tardises.size();
+            nextTardisId = Storage.rnd.nextInt(Storage.tardises.size());
             Tardis tardis = Storage.tardises.get(nextTardisId);
             World world = tardis.signLocation.getWorld();
             Location loc = Tardis.randomLocation(world, 10);

@@ -1,7 +1,7 @@
 package zedly.tardis;
 
 import org.bukkit.Location;
-import static org.bukkit.Material.STAINED_GLASS_PANE;
+import org.bukkit.Material;
 
 public class CloseTardis implements Runnable {
 
@@ -13,9 +13,7 @@ public class CloseTardis implements Runnable {
 
     @Override
     public void run() {
-        loc.getBlock().getRelative(0, 0, 1).setType(STAINED_GLASS_PANE);
-        loc.getBlock().getRelative(0, 0, 1).setData((byte) 15);
-        loc.getBlock().getRelative(0, -1, 1).setType(STAINED_GLASS_PANE);
-        loc.getBlock().getRelative(0, -1, 1).setData((byte) 15);
+        loc.getBlock().getRelative(0, 0, 1).setType(Material.BLUE_STAINED_GLASS_PANE);
+        loc.getBlock().getRelative(0, -1, 1).setType(Material.BLUE_STAINED_GLASS_PANE);
     }
 }

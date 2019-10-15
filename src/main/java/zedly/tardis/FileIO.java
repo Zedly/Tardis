@@ -18,7 +18,6 @@ public class FileIO {
         ArrayList<Location> tardisLocations = new ArrayList<>();
         fc.getList("locations", tardisLocations).forEach((o) -> {
             if (o instanceof Location) {
-
                 Location loc = (Location) o;
                 if (loc.getBlock().getState() instanceof Sign) {
 

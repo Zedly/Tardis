@@ -3,27 +3,37 @@ package zedly.tardis;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import static org.bukkit.Material.*;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
+import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.data.type.Stairs;
+import org.bukkit.block.data.type.Stairs.Shape;
 import org.bukkit.entity.Entity;
 
 public class Tardis {
 
     private static final int GLASS_PANE_COLOR = 11;
 
-    private static final Material[] tardisMaterials = new Material[]{QUARTZ_STAIRS, STAINED_GLASS_PANE, STAINED_GLASS_PANE, QUARTZ_STAIRS,
-        AIR, QUARTZ_STAIRS, STAINED_GLASS_PANE, STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS,
-        STAINED_GLASS_PANE, STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, STAINED_GLASS_PANE,
-        STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_BLOCK, AIR, WALL_SIGN, GLOWSTONE, STEP, QUARTZ_STAIRS,
-        AIR, AIR, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, STAINED_GLASS_PANE,
-        STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, STAINED_GLASS_PANE, STAINED_GLASS_PANE, QUARTZ_STAIRS,
-        AIR, QUARTZ_STAIRS, STAINED_GLASS_PANE, STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR};
-    private static final Byte[] tardisBlockData = new Byte[]{0, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 0, 0, 0, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 0, 0, 0, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 0, 0, 2, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 2, 0, 0, 6, 0, 0, 7, 3, 0, 0, 3, 0, 1, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 1, 0, 1, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 1, 0, 1, GLASS_PANE_COLOR, GLASS_PANE_COLOR, 1, 0};
+    private static final Material[] TARDIS_MATERIALS = new Material[]{QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS,
+        AIR, QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS,
+        BLUE_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE,
+        BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_BLOCK, AIR, OAK_WALL_SIGN, GLOWSTONE, QUARTZ_SLAB, QUARTZ_STAIRS,
+        AIR, AIR, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE,
+        BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR, QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS,
+        AIR, QUARTZ_STAIRS, BLUE_STAINED_GLASS_PANE, BLUE_STAINED_GLASS_PANE, QUARTZ_STAIRS, AIR};
+
+    private static final Shape[][] STAIR_SHAPES = {{Shape.OUTER_LEFT, Shape.STRAIGHT, Shape.OUTER_LEFT}, {Shape.STRAIGHT, null, Shape.STRAIGHT}, {Shape.OUTER_LEFT, Shape.STRAIGHT, Shape.OUTER_RIGHT}};
+    private static final BlockFace[][] STAIR_BLOCK_FACES = {{BlockFace.SOUTH, BlockFace.SOUTH, BlockFace.WEST}, {BlockFace.EAST, null, BlockFace.WEST}, {BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST}};
 
     public Location signLocation;
     public Boolean isTeleporting;
@@ -87,14 +97,12 @@ public class Tardis {
     }
 
     private void close() {
-        signLocation.getBlock().getRelative(0, 0, 1).setType(STAINED_GLASS_PANE);
-        signLocation.getBlock().getRelative(0, 0, 1).setData((byte) GLASS_PANE_COLOR);
-        signLocation.getBlock().getRelative(0, -1, 1).setType(STAINED_GLASS_PANE);
-        signLocation.getBlock().getRelative(0, -1, 1).setData((byte) GLASS_PANE_COLOR);
+        signLocation.getBlock().getRelative(0, 0, 1).setType(BLUE_STAINED_GLASS_PANE);
+        signLocation.getBlock().getRelative(0, -1, 1).setType(BLUE_STAINED_GLASS_PANE);
     }
 
     private void showSign(final Location location) {
-        if (this.signLocation.getBlock().getType().equals(WALL_SIGN)) {
+        if (this.signLocation.getBlock().getType().equals(OAK_WALL_SIGN)) {
             final Sign sign = (Sign) this.signLocation.getBlock().getState();
             for (int i = 0; i < 4; i++) {
                 final int line = i;
@@ -188,24 +196,50 @@ public class Tardis {
     }
 
     private static void generate(Location location) {
+
+        BlockFace[][] STAIR_BLOCK_FACES = {
+            {BlockFace.EAST, BlockFace.EAST, BlockFace.EAST},
+            {BlockFace.SOUTH, null, BlockFace.NORTH},
+            {BlockFace.WEST, BlockFace.WEST, BlockFace.WEST}};
+
+        Shape[][] STAIR_SHAPES = {
+            {Shape.OUTER_RIGHT, Shape.STRAIGHT, Shape.OUTER_LEFT},
+            {Shape.STRAIGHT, null, Shape.STRAIGHT},
+            {Shape.OUTER_LEFT, Shape.STRAIGHT, Shape.OUTER_RIGHT}};
+
         int counter = 0;
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {
                 for (int y = -2; y < 3; y++) {
-                    location.getBlock().getRelative(x, y, z).setType(tardisMaterials[counter]);
-                    location.getBlock().getRelative(x, y, z).setData(tardisBlockData[counter]);
-                    if (tardisMaterials[counter] == GLOWSTONE) {
-                        location.getBlock().getRelative(x, y, z).getState().update();
-                    }
-                    if (tardisMaterials[counter] == WALL_SIGN) {
-                        Sign sig = (Sign) location.getBlock().getRelative(x, y, z).getState();
-                        sig.setLine(0, ChatColor.DARK_BLUE + "Tardis");
-                        sig.setLine(1, ChatColor.BLACK + "x: " + ChatColor.MAGIC + "12345");
-                        sig.setLine(2, ChatColor.BLACK + "y: " + ChatColor.MAGIC + "12345");
-                        sig.setLine(3, ChatColor.BLACK + "z: " + ChatColor.MAGIC + "12345");
-                        sig.setRawData((byte) 3);
-                        location.getBlock().getRelative(x, y, z).setData((byte) 3);
-                        sig.update(true);
+                    location.getBlock().getRelative(x, y, z).setType(TARDIS_MATERIALS[counter]);
+                    if (null != TARDIS_MATERIALS[counter]) //location.getBlock().getRelative(x, y, z).setData(tardisBlockData[counter]);
+                    {
+                        switch (TARDIS_MATERIALS[counter]) {
+                            case GLOWSTONE:
+                                location.getBlock().getRelative(x, y, z).getState().update();
+                                break;
+                            case OAK_WALL_SIGN:
+                                Sign sig = (Sign) location.getBlock().getRelative(x, y, z).getState();
+                                org.bukkit.block.data.Directional sd = (Directional) sig.getBlockData();
+                                sd.setFacing(BlockFace.SOUTH);
+                                sig.setLine(0, ChatColor.DARK_BLUE + "Tardis");
+                                sig.setLine(1, ChatColor.BLACK + "x: " + ChatColor.MAGIC + "12345");
+                                sig.setLine(2, ChatColor.BLACK + "y: " + ChatColor.MAGIC + "12345");
+                                sig.setLine(3, ChatColor.BLACK + "z: " + ChatColor.MAGIC + "12345");
+                                //location.getBlock().getRelative(x, y, z).setData((byte) 3);
+                                sig.setBlockData(sd);
+                                sig.update(true);
+                                break;
+                            case QUARTZ_STAIRS:
+                                Block block = location.getBlock().getRelative(x, y, z);
+                                Stairs stairs = (Stairs) block.getBlockData();
+                                stairs.setFacing(STAIR_BLOCK_FACES[x + 1][z + 1]); //STAIR_BLOCK_FACES[x + 1][z + 1]
+                                stairs.setShape(STAIR_SHAPES[x + 1][z + 1]);
+                                block.setBlockData(stairs, true);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     counter++;
                 }

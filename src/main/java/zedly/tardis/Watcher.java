@@ -31,7 +31,7 @@ public class Watcher implements Listener {
         final Player player = evt.getPlayer();
         Block block = evt.getClickedBlock();
         if (evt.getAction().equals(RIGHT_CLICK_BLOCK)) {
-            if (block.getType() == Material.WALL_SIGN) {
+            if (block.getType() == Material.OAK_WALL_SIGN) {
                 for (Tardis tardis : Storage.tardises) {
                     if (tardis.signLocation.equals(block.getLocation())) {
                         World world = tardis.signLocation.getWorld();
@@ -74,7 +74,7 @@ public class Watcher implements Listener {
                         player.updateInventory();
                         for (int i = 0; i < 90; i += 5) {
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TardisPlugin.instance(), () -> {
-                                player.getWorld().spigot().playEffect(targetLoc, Effect.PORTAL, 0, 1, 3f, 3f, 3f, 2f, 400, 32);
+                                //player.getWorld().spigot().playEffect(targetLoc, Effect.PORTAL, 0, 1, 3f, 3f, 3f, 2f, 400, 32);
                             }, i);
                         }
                         break;
